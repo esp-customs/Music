@@ -1,0 +1,157 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>espcutoms-música</title>
+	<meta name="description" content="Documentation for espcutoms-música">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Buscar</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparando índice de búsqueda ...</li>
+						<li class="state failure">El índice de búsqueda no está disponible</li>
+					</ul>
+					<a href="index.html" class="title">espcutoms-música</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Opciones</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">Todo</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Público</li>
+									<li data-value="protected">Público / Protegido</li>
+									<li data-value="private" class="selected">Todas</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Heredado</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Exterioridad</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Solo exportado</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menú</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globales</a>
+				</li>
+			</ul>
+			<h1>espcutoms-música</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#espcutoms-música" id="espcutoms-música" style="color: inherit; text-decoration: none;">
+					<h1>ESPCUSTOMS Música</h1>
+				</a>
+				<p>Módulo de música simple, construido con TypeScript, utilizado por ESP CUSTOMS.</p>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>Example</h2>
+				</a>
+				<p><code>npm i -S espcutoms-música discord.js</code></p>
+				<p><strong>ES6</strong>:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { Client } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;discord.js&#x27;</span>;
+<span class="hljs-keyword">import</span> { MusicClient } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;espcutoms-música&#x27;</span>;
+
+<span class="hljs-keyword">const</span> music = <span class="hljs-keyword">new</span> MusicClient();
+<span class="hljs-keyword">const</span> bot = <span class="hljs-keyword">new</span> Client();
+
+music.on(<span class="hljs-string">&#x27;trackStart&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">{ textChannel }, track</span>) =&gt;</span> textChannel?.send(<span class="hljs-string">`\`<span class="hljs-subst">${track.title}</span>\` - **<span class="hljs-subst">${track.requestor}</span>** started.`</span>));
+
+bot.on(<span class="hljs-string">&#x27;message&#x27;</span>, <span class="hljs-keyword">async</span> (msg) =&gt; {
+  <span class="hljs-keyword">if</span> (msg.author.bot) <span class="hljs-keyword">return</span>;
+
+  <span class="hljs-keyword">if</span> (msg.content === <span class="hljs-string">&#x27;.play&#x27;</span>) {
+    <span class="hljs-keyword">const</span> player = getPlayer(msg);
+    <span class="hljs-keyword">await</span> player.play(<span class="hljs-string">&#x27;discord bot dashboard intro&#x27;</span>, { <span class="hljs-attr">member</span>: msg.member });
+  }
+});
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getPlayer</span>(<span class="hljs-params">msg</span>) </span>{
+  <span class="hljs-keyword">return</span> music.get(msg.guild.id)
+    ?? music.create({
+      <span class="hljs-attr">voiceChannel</span>: msg.member.voice.channel,
+      <span class="hljs-attr">textChannel</span>: msg.channel
+    });
+}
+
+bot.login(<span class="hljs-string">&#x27;&lt;your_bot_token&gt;&#x27;</span>);</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globales</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_main_.html">&quot;main&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_music_client_.html">&quot;music/client&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_music_events_.html">&quot;music/events&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_music_player_.html">&quot;music/player&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_music_q_.html">&quot;music/q&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Leyenda</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Clase</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Clase con parámetro de tipo</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Escriba alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interfaz</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generado usando <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+:root {
+  --background-primary: #2C2F33;
+  --background-secondary: #23272A;
+
+  --primary: #7289DA;
+  --font: #FFFFFF;
+}
+
+h1,
+h2 {
+  color: var(--primary) !important;
+}
+
+body,
+footer,
+.tsd-panel {
+  background-color: var(--background-primary) !important;
+}
+
+a,
+body,
+label,
+.tsd-page-toolbar {
+  color: var(--font) !important;
+}
+
+.tsd-page-title,
+.tsd-page-toolbar,
+.tsd-select-list li {
+  background-color: var(--background-secondary) !important;
+  border-color: transparent !important;
+}
+
+footer,
+ul,
+.tsd-navigation ul li {
+  border-color: transparent !important;
+}

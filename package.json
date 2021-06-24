@@ -1,0 +1,48 @@
+{
+  "name": "@espcustoms/music",
+  "version": "1.1.8",
+  "description": "Música de Discord.js usada para ESP CUSTOMS",
+  "main": "lib/main.js",
+  "types": "lib/main.d.ts",
+  "scripts": {
+    "test": "ts-mocha test/test.ts",
+    "demo": "ts-node-dev demo/bot.ts",
+    "docs": "typedoc --out docs src --theme docs-theme"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SrGobi/ESPCUSTOMS-Music.git"
+  },
+  "declaration": true,
+  "private": false,
+  "keywords": [
+    "discord",
+    "discord music",
+    "discord.js music"
+  ],
+  "prepublish": "tsc",
+  "author": "SrGobi",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/opus": "^0.5.3",
+    "@types/yt-search": "^2.3.0",
+    "discord-ytdl-core": "^5.0.4",
+    "ffmpeg-static": "^4.4.0",
+    "yt-search": "^2.9.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.19",
+    "@types/chai-spies": "^1.0.3",
+    "@types/mocha": "^8.2.2",
+    "chai": "^4.3.4",
+    "chai-events": "0.0.3",
+    "chai-spies": "^1.0.0",
+    "discord.js": "^12.5.3",
+    "mocha": "^9.0.1",
+    "ts-mocha": "^8.0.0",
+    "typescript": "^4.3.4"
+  }
+}
