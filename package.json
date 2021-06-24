@@ -1,5 +1,5 @@
 {
-  "name": "@espcustoms/music",
+  "name": "@espcustomss/music",
   "version": "1.1.8",
   "description": "Música de Discord.js usada para ESP CUSTOMS",
   "main": "lib/main.js",
@@ -44,5 +44,8 @@
     "mocha": "^9.0.1",
     "ts-mocha": "^8.0.0",
     "typescript": "^4.3.4"
+  },
+  "publisConfig":{
+    "access": "public"
   }
 }
