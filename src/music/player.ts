@@ -9,28 +9,28 @@ export class Player {
 
   private connection?: VoiceConnection | null;
 
-  /** Si la cola no está vacía y se está emitiendo audio. */
+  /** Whether the queue is not empty and audio is being emitted. */
   get isPlaying() {
     return !this.q.isEmpty;
   }
-  /** Si el reproductor está en pausa o no. */
+  /** Whether the player is paused or not. */
   get isPaused() {
     return this.connection?.dispatcher?.paused;
   }
-  /** El tiempo (en milisegundos) que la pista ha estado reproduciendo audio durante. */
+  /** The time (in milliseconds) that the track has been playing audio for. */
   get position() {
     return this.connection?.dispatcher?.totalStreamTime;
   }
 
-  /** Canal de texto al que está conectado el reproductor. */
+  /** Text channel that the player is connected to. */
   get textChannel() {
     return this.options.textChannel;
   }
-  /** Canal de voz al que está conectado el reproductor. */
+  /** Voice channel that the player is connected to. */
   get voiceChannel() {
     return this.options.voiceChannel;
   }
-  /** ID de gremio del jugador. */
+  /** Guild ID of the player. */
   get guildId() {
     return this.options.guildId;
   }
@@ -45,10 +45,10 @@ export class Player {
     });
   }
 
-  /** Únete a un canal de voz. */
+  /** Únase a un canal de voz. */
   async join() {
     if (!this.voiceChannel?.joinable)
-      throw new TypeError(`Channel is not joinable.`);
+      throw new TypeError(`No se puede unir al canal.`);
 
     this.connection = await this.options.voiceChannel.join();
   }
@@ -65,7 +65,7 @@ export class Player {
   /** Se une a un canal y luego reproduce una pista de YouTube.
    * Si una pista ya se está reproduciendo, se pondrá en cola.
    * @param query Término para buscar pistas en YouTube.
-   * @param requestor Miembro del gremio que solicitó reproducir esta pista.
+   * @param requestor Miembro del servidor que solicitó reproducir esta pista.
   */
   async play(query: string, requestor?: GuildMember) {
     const { videos } = await searchYT(query);
@@ -93,12 +93,12 @@ export class Player {
     return track;
   }
 
-  /** Establecer el volumen del jugador.
+  /** Establecer el volumen del miembro.
    * @param amount Valor de 0 a 1.
    */ 
   async setVolume(amount: number) {
     if (!this.isPlaying)
-      throw new TypeError('El jugador no está jugando nada.');
+      throw new TypeError('El miembro no está escuchando nada.');
 
     this.connection.dispatcher.setVolume(amount);
   }
@@ -108,7 +108,7 @@ export class Player {
    */ 
   async seek(position: number) {
     if (!this.isPlaying)
-      throw new TypeError('El jugador no está jugando nada.');
+      throw new TypeError('El miembro no está jugando nada.');
     if (position >= this.q.peek().duration.seconds)
       throw new TypeError('La posición es más larga que la duración de la pista.');
 

@@ -3,7 +3,7 @@ import { Player, PlayerOptions, Track } from './player';
 import { emitter, MusicClientEvent } from './events';
 
 export class MusicClient {
-  /** Jugadores para cada gremio. */
+  /** miembroes para cada servidor. */
   readonly players = new Map<string, Player>();
 
   constructor() {
@@ -18,17 +18,17 @@ export class MusicClient {
     emitter.on(event, listener);
   }
 
-  /** Crea un jugador para un gremio.
-   * @param guildId ID de gremio del jugador.
-   * @param options Opciones para el jugador.
+  /** Crea un miembro para un servidor.
+   * @param guildId ID de servidor del miembro.
+   * @param options Opciones para el miembro.
   */
   create(guildId: string, options: PlayerOptions): Player {
     return this.players
         .set(guildId, new Player({ guildId, ...options }))
         .get(guildId) as Player;
   }
-  /** Consigue un jugador para un gremio.
-   * @param guildId ID de gremio del jugador.
+  /** Consigue un miembro para un servidor.
+   * @param guildId ID de servidor del miembro.
   */
   get(guildId: string): Player {
     return this.players.get(guildId);

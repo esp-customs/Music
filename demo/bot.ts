@@ -6,8 +6,8 @@ const bot = new Client();
 const music = new MusicClient();
 const commands = new MusicCommands(music);
 
-music.on('trackStart', (player: Player, track: Track) => player.textChannel?.send(`**${track.title}** started.`));
-music.on('queueEnd', (player: Player) => player.textChannel?.send(`Queue has ended.`));
+music.on('trackStart', (player: Player, track: Track) => player.textChannel?.send(`**${track.title}** empezado.`));
+music.on('queueEnd', (player: Player) => player.textChannel?.send(`La cola ha terminado.`));
 
 bot.on('message', async (msg) => {
   if (msg.author.bot) return;
@@ -28,6 +28,6 @@ bot.on('message', async (msg) => {
   }
 });
 
-bot.on('ready', () => console.log('Bot logged in!'))
+bot.on('ready', () => console.log('¡Bot ha iniciado sesión!'))
 
-bot.login('NzUxNDkzODI5MjAyNDExNzAw.X1J5Kg.f80jQ1I13zZw2BbZWtCgalPhFIM');
+bot.login('NzczNjE3NzQzMzQ1NDgzODI2.X6L1qw.zOBcaHZ7TdQ7dbL25vifbhcLLeM');

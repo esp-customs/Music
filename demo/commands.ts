@@ -8,8 +8,14 @@ export class MusicCommands {
     const player = this.getPlayer(msg);
     const query = msg.content.split('.play ')[1];
     const track = await player.play(query);
+    const skipyng = await track.duration;
 
-    await msg.channel.send(`**${track.title}** added to queue.`);
+    if(!skipyng){
+      const player = this.getPlayer(msg);
+      await player.skip();
+    }
+
+    await msg.channel.send(`**${track.title}** agregado a la cola.`);
   }
 
   async seek(msg: Message) {
@@ -18,7 +24,7 @@ export class MusicCommands {
 
     await player.seek(position);
 
-    await msg.channel.send(`**${player.q.peek().title}** is now at \`${position}s\`.`);
+    await msg.channel.send(`**${player.q.peek().title}** está ahora en \`${position}s\`.`);
   }
 
   async q(msg: Message) {

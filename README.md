@@ -1,27 +1,25 @@
-# ESPCUSTOMS Música
+# ESP CUSTOMS Music
 Simple music module, built with TypeScript, used by ESP CUSTOMS.
 
-**Docs** - https://SrGobi.github.io/espcutoms-música
-
 ## Example
-`npm i -S espcutoms-música discord.js`
+`npm i -S @espcustomss/music discord.js`
 
 **ES6**:
 ```ts
 import { Client } from 'discord.js';
-import { MusicClient } from 'espcutoms-música';
+import { MusicClient } from '@espcustomss/music';
 
 const music = new MusicClient();
 const bot = new Client();
 
-music.on('trackStart', ({ textChannel }, track) => textChannel?.send(`\`${track.title}\` - **${track.requestor}** started.`));
+music.on('trackStart', (player, track) => player.textChannel?.send(`\`${track.title}\` - **${track.requestor}** empezado.`));
 
 bot.on('message', async (msg) => {
   if (msg.author.bot) return;
   
   if (msg.content === '.play') {
     const player = getPlayer(msg);
-    await player.play('discord bot dashboard intro', { member: msg.member });
+    await player.play('introducción al tablero de discord bot', { member: msg.member });
   }
 });
 
@@ -33,5 +31,5 @@ function getPlayer(msg) {
     });
 }
 
-bot.login('<your_bot_token>');
+bot.login('<el_token_de_tu_bot>');
 ```
