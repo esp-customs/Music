@@ -1,4 +1,9 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
 .vscode
 
+# Dependency directories and files
 node_modules/
 lib/
+
+# Logs
+bun.lockb
