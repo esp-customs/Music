@@ -119,10 +119,6 @@ export class MusicPlayer {
     if (!this.connection)
       throw new TypeError('No connection found.');
 
-    let info = await ytdl.getInfo(track.url);
-    let audioFormats = ytdl.filterFormats(info.formats, 'audioonly');
-    console.log('Formats with only audio: ' + audioFormats.length);
-
     const stream = ytdl(track.url, { filter: 'audioonly', highWaterMark: 1 << 25 });
     this.resource = createAudioResource(stream);
 
