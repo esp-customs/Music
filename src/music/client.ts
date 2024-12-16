@@ -1,41 +1,41 @@
 import searchYT from 'yt-search';
-import { Player, PlayerOptions, Track } from './player';
+import { MusicPlayer, PlayerOptions, Track } from './player';
 import { emitter, MusicClientEvent } from './events';
 
 export class MusicClient {
-  /** miembroes para cada servidor. */
-  readonly players = new Map<string, Player>();
+  /** Players for each guild. */
+  readonly players = new Map<string, MusicPlayer>();
 
   constructor() {
-    this.on('queueEnd', (player: Player) => this.players.delete(player.guildId));
+    this.on('queueEnd', (player: MusicPlayer) => this.players.delete(player.guildId));
   }
 
-  /** Escuche los eventos musicales de los clientes.
-   * @param event Evento de cliente de música para escuchar.
-   * @param event Función de devolución de llamada para el oyente de eventos.
+  /** Listen to music client events.
+   * @param event Music client event to listen to.
+   * @param event Callback function for event listener.
   */
   on(event: MusicClientEvent, listener: (...args: any[]) => void) {
     emitter.on(event, listener);
   }
 
-  /** Crea un miembro para un servidor.
-   * @param guildId ID de servidor del miembro.
-   * @param options Opciones para el miembro.
+  /** Create a player for a guild.
+   * @param guildId Guild ID of the player.
+   * @param options Options for the player.
   */
-  create(guildId: string, options: PlayerOptions): Player {
+  create(guildId: string, options: PlayerOptions): MusicPlayer {
     return this.players
-        .set(guildId, new Player({ guildId, ...options }))
-        .get(guildId) as Player;
+      .set(guildId, new MusicPlayer({ guildId, ...options }))
+      .get(guildId) as MusicPlayer;
   }
-  /** Consigue un miembro para un servidor.
-   * @param guildId ID de servidor del miembro.
+  /** Get a player for a guild.
+   * @param guildId Guild ID of the player.
   */
-  get(guildId: string): Player {
+  get(guildId: string): MusicPlayer {
     return this.players.get(guildId);
   }
-  
-  /** Busque pistas en YouTube.
-   * @param query Término para buscar en YouTube.
+
+  /** Search YouTube for tracks.
+   * @param query Term to search YouTube for.
   */
   async search(query: string): Promise<Track[]> {
     const result = await searchYT(query);
@@ -43,4 +43,4 @@ export class MusicClient {
   }
 }
 
-export { Player, PlayerOptions, Track } from './player';
+export { MusicPlayer, PlayerOptions, Track } from './player';
