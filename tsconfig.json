@@ -5,15 +5,19 @@
     "downlevelIteration": true,
     "esModuleInterop": true,
     "inlineSourceMap": true,
-    "lib": ["es2020"],
+    "lib": [
+      "ES2020"
+    ],
     "module": "CommonJS",
     "noImplicitAny": false,
     "outDir": "lib",
     "resolveJsonModule": true,
     "strict": true,
     "strictNullChecks": false,
-    "target": "ES5",
-    "watch": true
+    "target": "ES2020"
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "test"
+  ]
 }
