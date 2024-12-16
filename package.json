@@ -1,6 +1,6 @@
 {
   "name": "@espcustomss/music",
-  "version": "2.0.0",
+  "version": "2.0.0-dev.1",
   "description": "Música de Discord.js usada para ESP CUSTOMS",
   "main": "lib/main.js",
   "types": "lib/main.d.ts",
