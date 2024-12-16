@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import Q from '../../src/music/q';
 
 describe('music/q', () => {
@@ -8,21 +7,18 @@ describe('music/q', () => {
 
   it('enqueue adds item to q', () => {
     q.enqueue('a');
-
-    expect(q.length).to.equal(1);
+    expect(q.length).toBe(1);
   });
 
   it('dequeue removes item from q', () => {
     q.enqueue('a');
     q.dequeue();
-    
-    expect(q.length).to.equal(0);
+    expect(q.length).toBe(0);
   });
 
   it('peek returns first queue item', () => {
     q.enqueue('a');
-    
-    expect(q.peek()).to.equal('a');
+    expect(q.peek()).toBe('a');
   });
 
   it('shuffle randomizes array', () => {
@@ -30,9 +26,10 @@ describe('music/q', () => {
     q.enqueue('b');
     q.enqueue('c');
 
-    while(q.items[0] === 'a')
+    while (q.items[0] === 'a') {
       q.shuffle();
-    
-    expect(q.items).to.not.deep.equal(['a', 'b', 'c']);
+    }
+
+    expect(q.items).not.toEqual(['a', 'b', 'c']);
   });
 });
