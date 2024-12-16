@@ -1,4 +1,4 @@
-import { Message, TextChannel } from 'discord.js';
+import { Guild, GuildMember, Message, TextChannel, VoiceChannel } from 'discord.js';
 import { MusicClient } from '../src/music/client';
 
 export class MusicCommands {
@@ -9,22 +9,24 @@ export class MusicCommands {
     const query = msg.content.split('.play ')[1];
     const track = await player.play(query);
     const skipyng = await track.duration;
+    const textchannel = msg.channel as TextChannel;
 
     if(!skipyng){
       const player = this.getPlayer(msg);
       await player.skip();
     }
 
-    await msg.channel.send(`**${track.title}** agregado a la cola.`);
+    await textchannel.send(`**${track.title}** agregado a la cola.`);
   }
 
   async seek(msg: Message) {
     const player = this.getPlayer(msg);    
-    const position = +msg.content.split('.seek ')[1];    
+    const position = +msg.content.split('.seek ')[1];
+    const textchannel = msg.channel as TextChannel;
 
     await player.seek(position);
 
-    await msg.channel.send(`**${player.q.peek().title}** está ahora en \`${position}s\`.`);
+    await textchannel.send(`**${player.q.peek().title}** está ahora en \`${position}s\`.`);
   }
 
   async q(msg: Message) {
@@ -33,7 +35,8 @@ export class MusicCommands {
       .map(track => track.title)
       .join('\n');
   
-    await msg.channel.send(`**Queue**:\n` + details);
+    const textchannel = msg.channel as TextChannel;
+    await textchannel.send(`**Queue**:\n` + details);
   }
 
   async skip(msg: Message) {
@@ -47,10 +50,13 @@ export class MusicCommands {
   }
 
   private getPlayer(msg: Message) {  
-    return this.music.players.get(msg.guild.id)
-      ?? this.music.create(msg.guild.id, {
+    const guild = msg.guild as Guild;
+    const member = guild.members.cache.get(msg.author.id) as GuildMember;
+    return this.music.players.get(guild.id)
+      ?? this.music.create(guild.id, {
         textChannel: msg.channel as TextChannel,
-        voiceChannel: msg.member.voice.channel
+        voiceChannel: member.voice.channel as VoiceChannel,
+        guildId: guild.id
       });
   }
 }
