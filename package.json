@@ -7,7 +7,8 @@
   "scripts": {
     "test": "jest",
     "start": "ts-node-dev demo/bot.ts",
-    "docs": "typedoc --out docs src --theme docs-theme"
+    "docs": "typedoc --out docs src --theme docs-theme",
+    "build": "tsc"
   },
   "publishConfig": {
     "access": "public"
@@ -34,21 +35,21 @@
     "@discordjs/voice": "^0.18.0",
     "@distube/ytdl-core": "^4.15.3",
     "@mapbox/node-pre-gyp": "^1.0.11",
-    "@types/jest": "^29.5.14",
     "@types/yt-search": "^2.10.3",
-    "discord-ytdl-core": "^5.0.4",
     "ffmpeg-static": "^5.2.0",
-    "jest": "^29.7.0",
     "opusscript": "^0.1.1",
-    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "ts-node-dev": "^2.0.0",
     "yt-search": "^2.12.1",
     "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.14",
     "discord.js": "^14.16.3",
-    "typescript": "^4.9.5"
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node-dev": "^2.0.0",
+    "typedoc": "^0.27.5",
+    "typescript": "^5.2.2"
   },
   "trustedDependencies": [
     "es5-ext",
