@@ -2,6 +2,7 @@ import { AudioPlayer, AudioPlayerStatus, createAudioResource, VoiceConnection, V
 import { GuildMember, TextChannel, VoiceChannel } from 'discord.js';
 import searchYT, { VideoSearchResult } from 'yt-search';
 import ytdl from '@distube/ytdl-core';
+import fs from 'fs';
 import Q from './q';
 import { emitter } from './events';
 
@@ -116,21 +117,16 @@ export class MusicPlayer {
   }
 
   private async playTrack(track: Track) {
-    const YOUTUBE_COOKIES = 'SID=g.a000rQgnfSbclc3A9m2Ib-2TdPOoT7CafD6cNmofvv4w3c24vMoIsE3EJMT9kZGwZDiHQBDcuwACgYKAaUSARISFQHGX2MiQGUes8MuXlK-O6dHlN7qnhoVAUF8yKqok465W-LzlSWYaFVFjJFV0076; SSID=AqedMl4J3wFqz2do9; VISITOR_INFO1_LIVE=F9MfAXJU4Jg';
-
     if (!this.connection)
       throw new TypeError('No connection found.');
 
     const stream = ytdl(track.url, {
       filter: 'audioonly',
-      highWaterMark: 1 << 25,
-      requestOptions: {
-        headers: {
-          'Cookie': YOUTUBE_COOKIES,
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
-        }
-      }
+      highWaterMark: 1 << 25
     });
+
+    ytdl.createAgent(JSON.parse(fs.readFileSync('cookies.json', 'utf-8')));
+    
     this.resource = createAudioResource(stream, { inlineVolume: true });
 
     this.player.play(this.resource);
