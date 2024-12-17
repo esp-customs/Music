@@ -46,10 +46,6 @@ export class MusicPlayer {
       const nextTrack = this.q.peek();
       await this.playTrack(nextTrack);
     });
-
-    this.player.on(AudioPlayerStatus.Idle, () => {
-      console.log('Audio player is idle, moving to the next track.');
-    });
   }
 
   /** Join a voice channel. */
@@ -63,24 +59,18 @@ export class MusicPlayer {
       adapterCreator: this.voiceChannel.guild.voiceAdapterCreator
     });
 
-    connection.on(VoiceConnectionStatus.Ready, () => {
-      console.log('Connected to the voice channel.');
-    });
-
     connection.on(VoiceConnectionStatus.Disconnected, async () => {
       try {
         await Promise.race([
           entersState(connection, VoiceConnectionStatus.Signalling, 5000),
           entersState(connection, VoiceConnectionStatus.Connecting, 5000),
         ]);
-        console.log('Reconnected to the voice channel.');
       } catch {
-        console.log('Disconnected completely.');
         connection.destroy();
       }
     });
 
-    this.connection = connection;
+    return this.connection = connection;
   }
 
   /** Leave a voice channel. */
@@ -110,22 +100,23 @@ export class MusicPlayer {
       if (!this.connection) {
         await this.join();
       }
-      await this.playTrack(track);
+      return await this.playTrack(track);
     }
 
     return track;
   }
 
-  private async playTrack(track: Track) {
+  private async playTrack(track: Track, seek = 0) {
     if (!this.connection)
       throw new TypeError('No connection found.');
 
+    const agent = ytdl.createAgent(JSON.parse(fs.readFileSync('cookies.json', 'utf-8')));
+
     const stream = ytdl(track.url, {
       filter: 'audioonly',
-      highWaterMark: 1 << 25
+      highWaterMark: 1 << 25,
+      agent
     });
-
-    ytdl.createAgent(JSON.parse(fs.readFileSync('cookies.json', 'utf-8')));
     
     this.resource = createAudioResource(stream, { inlineVolume: true });
 
@@ -133,10 +124,12 @@ export class MusicPlayer {
 
     const subscription = this.connection.subscribe(this.player);
     if (!subscription) {
-      console.error('Failed to subscribe to the voice connection.');
+      throw new TypeError('Failed to subscribe to connection.');
     }
 
-    console.log('Playing:', track.url);
+    if (seek <= 0) emitter.emit('trackStart', this, track);
+
+    return track;
   }
 
   /** Set volume of player.
@@ -146,7 +139,7 @@ export class MusicPlayer {
     if (!this.isPlaying)
       throw new TypeError('Player is not playing anything.');
 
-    this.resource.volume?.setVolume(amount);
+    return this.resource.volume?.setVolume(amount);
   }
 
   /** Move position in current playing track.
@@ -158,7 +151,7 @@ export class MusicPlayer {
     if (position >= this.q.peek().duration.seconds)
       throw new TypeError('Position is longer than track duration.');
 
-    await this.playTrack(this.q.peek());
+    return await this.playTrack(this.q.peek(), position);
   }
 
   /** Stop playing and clear queue. */
@@ -166,8 +159,7 @@ export class MusicPlayer {
     if (!this.isPlaying)
       throw new TypeError('Player is not playing anything.');
 
-    console.log('Stopping player and clearing queue.');
-    this.player.stop();
+    this.player.stop(true);
 
     while (!this.q.isEmpty)
       this.q.dequeue();
