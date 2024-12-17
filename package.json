@@ -33,14 +33,13 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/voice": "^0.18.0",
-    "@distube/ytdl-core": "^4.15.3",
+    "@distube/ytdl-core": "^4.15.4",
     "@mapbox/node-pre-gyp": "^1.0.11",
     "@types/yt-search": "^2.10.3",
     "ffmpeg-static": "^5.2.0",
     "opusscript": "^0.1.1",
     "ts-node": "^10.9.2",
-    "yt-search": "^2.12.1",
-    "ytdl-core": "^4.11.5"
+    "yt-search": "^2.12.1"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
