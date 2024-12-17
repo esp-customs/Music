@@ -11,12 +11,12 @@ export class MusicCommands {
     const skipyng = await track.duration;
     const textchannel = msg.channel as TextChannel;
 
-    if(!skipyng){
+    if (!skipyng) {
       const player = this.getPlayer(msg);
       await player.skip();
     }
 
-    await textchannel.send(`**${track.title}** agregado a la cola.`);
+    return textchannel.send(`**${track.title}** agregado a la cola.`);
   }
 
   async seek(msg: Message) {
@@ -26,7 +26,7 @@ export class MusicCommands {
 
     await player.seek(position);
 
-    await textchannel.send(`**${player.q.peek().title}** está ahora en \`${position}s\`.`);
+    return textchannel.send(`**${player.q.peek().title}** está ahora en \`${position}s\`.`);
   }
 
   async q(msg: Message) {
@@ -36,17 +36,62 @@ export class MusicCommands {
       .join('\n');
   
     const textchannel = msg.channel as TextChannel;
-    await textchannel.send(`**Queue**:\n` + details);
+    return textchannel.send(`**Queue**:\n` + details);
   }
 
   async skip(msg: Message) {
     const player = this.getPlayer(msg);
     await player.skip();
+
+    const textchannel = msg.channel as TextChannel;
+
+    return textchannel.send(`**${player.q.peek().title}** ha sido saltado.`);
   }
 
   async stop(msg: Message) {
     const player = this.getPlayer(msg);
     await player.stop();
+
+    const textchannel = msg.channel as TextChannel;
+
+    return textchannel.send('La cola ha sido detenida.');
+  }
+
+  async leave(msg: Message) {
+    const player = this.getPlayer(msg);
+    await player.leave();
+
+    const textchannel = msg.channel as TextChannel;
+
+    return textchannel.send('Saliendo del canal de voz.');
+  }
+
+  async resume(msg: Message) {
+    const player = this.getPlayer(msg);
+    await player.resume();
+
+    const textchannel = msg.channel as TextChannel;
+
+    return textchannel.send('Reanudando la reproducción.');
+  }
+
+  async pause(msg: Message) {
+    const player = this.getPlayer(msg);
+    await player.pause();
+
+    const textchannel = msg.channel as TextChannel;
+
+    return textchannel.send('Pausando la reproducción.');
+  }
+
+  async volume(msg: Message) {
+    const player = this.getPlayer(msg);
+    const amount = +msg.content.split('.volume ')[1];
+    const textchannel = msg.channel as TextChannel;
+
+    await player.setVolume(amount);
+
+    return textchannel.send(`Volumen ajustado a \`${amount}\`.`);
   }
 
   private getPlayer(msg: Message) {  
