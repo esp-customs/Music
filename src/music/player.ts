@@ -131,7 +131,7 @@ export class MusicPlayer {
         }
       }
     });
-    this.resource = createAudioResource(stream);
+    this.resource = createAudioResource(stream, { inlineVolume: true });
 
     this.player.play(this.resource);
 
