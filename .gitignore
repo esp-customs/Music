@@ -4,5 +4,8 @@
 # Dependency directories and files
 node_modules/
 
+# Cookies
+cookies.json
+
 # Logs
 bun.lockb
