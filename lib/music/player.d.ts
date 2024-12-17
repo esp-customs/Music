@@ -1,3 +1,4 @@
+import { VoiceConnection } from '@discordjs/voice';
 import { GuildMember, TextChannel, VoiceChannel } from 'discord.js';
 import { VideoSearchResult } from 'yt-search';
 import Q from './q';
@@ -19,7 +20,7 @@ export declare class MusicPlayer {
     get guildId(): string;
     constructor(options: PlayerOptions);
     /** Join a voice channel. */
-    join(): Promise<void>;
+    join(): Promise<VoiceConnection>;
     /** Leave a voice channel. */
     leave(): Promise<void>;
     /** Joins a channel, then plays a track from YouTube.
@@ -36,7 +37,7 @@ export declare class MusicPlayer {
     /** Move position in current playing track.
      * @param position Time (in seconds) to seek to.
      */
-    seek(position: number): Promise<void>;
+    seek(position: number): Promise<Track>;
     /** Stop playing and clear queue. */
     stop(): Promise<void>;
     /** Pause playback. */
@@ -46,7 +47,7 @@ export declare class MusicPlayer {
     /** Skip one or more tracks, and return track to play.
      * @param count Number of tracks to skip.
     */
-    skip(count?: number): Promise<void>;
+    skip(count?: number): Promise<Track>;
 }
 export interface PlayerOptions {
     textChannel: TextChannel;
